@@ -1,6 +1,15 @@
 pipeline {
 	agent any 
 	
+	triggers {
+  		pollSCM '* * * * *'
+		}
+	
+	parameters {
+  		choice choices: ['Dev', 'QA', 'UAT', 'PROD'], name: 'Choice_para'
+		}
+
+	
 	stages {
 	    stage('Checkout') {
 	        steps {
@@ -19,8 +28,3 @@ pipeline {
 		slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#devops', color: 'good', message: 'This is for testing', teamDomain: 'Student', tokenCredentialId: 'slacktest'	
 		}}	
 }}
-
-
-
-
-slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#devops', color: 'good', message: 'This is for testing', teamDomain: 'Student', tokenCredentialId: 'slacktest'
